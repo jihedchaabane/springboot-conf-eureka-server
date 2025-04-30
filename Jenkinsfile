@@ -28,6 +28,18 @@ pipeline {
             }
         }
         
+        stage('Stop and Remove Existing Container') {
+            steps {
+                script {
+                    // Arréter et supprimer le conteneur s'il existe
+                    sh """
+                        docker stop ${CONTAINER_NAME} || true
+                        docker rm ${CONTAINER_NAME} || true
+                    """
+                }
+            }
+        }
+        
         stage('Remove Docker Image') {
             steps {
                 script {
@@ -89,17 +101,6 @@ pipeline {
 //                }
 //            }
 //        }
-        stage('Stop and Remove Existing Container') {
-            steps {
-                script {
-                    // Arréter et supprimer le conteneur s'il existe
-                    sh """
-                        docker stop ${CONTAINER_NAME} || true
-                        docker rm ${CONTAINER_NAME} || true
-                    """
-                }
-            }
-        }
 		
 		stage('Run Docker Container') {
             steps {
