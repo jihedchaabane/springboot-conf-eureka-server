@@ -1,6 +1,6 @@
 # springboot-conf-eureka-server
 -----------------------------------------------------
-IN "10.0.0.129" do:
+IN "10.0.0.137" do:
 -----------------------------------------------------
 sudo firewall-cmd --add-port=8761/tcp --permanent
 sudo firewall-cmd --reload
