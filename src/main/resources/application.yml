@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: springboot-conf-eureka-server    
+    name: springboot-conf-eureka-server
     
 eureka:
   client:
