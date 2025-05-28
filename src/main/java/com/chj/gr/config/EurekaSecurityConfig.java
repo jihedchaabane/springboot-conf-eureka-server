@@ -11,25 +11,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class EurekaSecurityConfig {
-
-	@Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            // Disable CSRF for Eureka client endpoints
-            .csrf(csrf -> csrf.ignoringAntMatchers("/eureka/**"))
-            // Configure authorization
-            .authorizeHttpRequests(auth -> auth
-                // Allow unauthenticated access to Eureka client endpoints
-                .antMatchers("/eureka/**").permitAll()
-                // Secure the Eureka dashboard
-                .antMatchers("/**").hasRole("ADMIN")
-                // Any other requests require authentication
-                .anyRequest().authenticated()
-            )
-            // Enable HTTP Basic authentication for simplicity
-            .httpBasic(httpBasic -> httpBasic.realmName("Eureka"));
-        return http.build();
-    }
 	/**
 		# Should work without credentials
 		curl http://localhost:8761/eureka/apps
@@ -39,6 +20,27 @@ public class EurekaSecurityConfig {
 		# With credentials
 		curl -u admin:admin http://localhost:8761/
 	*/
+	@Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            // Disable CSRF for Eureka client endpoints
+            .csrf(csrf -> csrf.ignoringAntMatchers("/eureka/**"))
+            // Configure authorization
+            .authorizeHttpRequests(auth -> auth
+        		// Allow public access to static resources and login page
+                .antMatchers("/webjars/**", "/css/**", "/js/**", "/images/**").permitAll()
+                // Allow unauthenticated access to Eureka client endpoints
+                .antMatchers("/eureka/**").hasAnyRole("ADMIN", "USER")
+                // Secure the Eureka dashboard
+                .antMatchers("/**").hasRole("ADMIN")
+                // Any other requests require authentication
+                .anyRequest().authenticated()
+            )
+            // Enable HTTP Basic authentication for simplicity
+            .httpBasic(httpBasic -> httpBasic.realmName("Eureka"));
+        return http.build();
+    }
+	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
