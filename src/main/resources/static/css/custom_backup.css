@@ -1,3 +1,6 @@
+/* src/main/resources/static/css/custom.css */
+
+/* Reset and Base Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: #f4f6f9; /* Light gray background similar to Spring Boot Admin */
@@ -107,14 +110,4 @@ body {
     .eureka-container {
         padding: 0 10px;
     }
-}
-
-/* RememberMe checkbox styling */
-.form-check-input:checked {
-    background-color: #17a2b8;
-    border-color: #17a2b8;
-}
-.form-check-label {
-    color: #495057;
-    margin-left: 0.25rem;
 }

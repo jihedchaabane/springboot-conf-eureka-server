@@ -1,3 +1,6 @@
+/**
+ * WORKS_FINE
+ *  
 package com.chj.gr.config;
 
 import org.springframework.context.annotation.Bean;
@@ -12,7 +15,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-public class EurekaCustomLoginPageSecurityConfig {
+public class EurekaCustomLoginSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -60,3 +63,4 @@ public class EurekaCustomLoginPageSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+*/
