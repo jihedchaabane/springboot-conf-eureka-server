@@ -12,13 +12,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class EurekaSecurityConfig {
 	/**
-		# Should work without credentials
+		# Should not work without credentials
 		curl http://localhost:8761/eureka/apps
 	
 		# Should require authentication
 		curl http://localhost:8761/
+		
 		# With credentials
 		curl -u admin:admin http://localhost:8761/
+		curl -u admin:admin http://localhost:8761/eureka/apps
+		curl -u user:user http://localhost:8761/
+		curl -u user:user http://localhost:8761/eureka/apps
 	*/
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
