@@ -6,9 +6,9 @@ pipeline {
     environment {
 		PROJECT = 'springboot-conf-eureka-server'
         // Nom de l'image Docker
-        DOCKER_IMAGE = 'jihed123/${PROJECT}:0.0.1-SNAPSHOT'
+        DOCKER_IMAGE = "jihed123/${PROJECT}:0.0.1-SNAPSHOT"
         // Nom du conteneur
-        CONTAINER_NAME = 'container-${PROJECT}'
+        CONTAINER_NAME = "container-${PROJECT}"
         // Port de l'application
         APP_PORT = '8761'
         // common-network
@@ -110,7 +110,7 @@ pipeline {
             }
         }
 		
-		stage('Push Image to Harbor') {
+		stage('Push Docker Image to Harbor') {
             steps {
                 sh '''
                 //docker pull ${DOCKER_IMAGE}
