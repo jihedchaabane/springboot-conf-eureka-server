@@ -4,14 +4,20 @@ pipeline {
         maven 'MAVEN'
     }
     environment {
+		PROJECT = 'springboot-conf-eureka-server'
         // Nom de l'image Docker
-        DOCKER_IMAGE = 'jihed123/springboot-conf-eureka-server:0.0.1-SNAPSHOT'
+        DOCKER_IMAGE = 'jihed123/${PROJECT}:0.0.1-SNAPSHOT'
         // Nom du conteneur
-        CONTAINER_NAME = 'container-springboot-conf-eureka-server'
+        CONTAINER_NAME = 'container-${PROJECT}'
         // Port de l'application
         APP_PORT = '8761'
         // common-network
         DOCKER_NETWORK = 'springboot-network'
+		
+		// HARBOR
+		HARBOR_URL = '10.0.0.140'
+        IMAGE_TARGET = "${HARBOR_URL}/${PROJECT}/${PROJECT}:0.0.1-SNAPSHOT"
+        HARBOR_CREDS = credentials('harbor-credentials')  // ID de vos credentials
     }
     stages {
         stage('Checkout') {
@@ -104,6 +110,17 @@ pipeline {
             }
         }
 		
+		stage('Push Image to Harbor') {
+            steps {
+                sh '''
+                //docker pull ${DOCKER_IMAGE}
+                docker tag ${DOCKER_IMAGE} ${IMAGE_TARGET}
+                echo "${HARBOR_CREDS_PSW}" | docker login ${HARBOR_URL} -u ${HARBOR_CREDS_USR} --password-stdin
+                docker push ${IMAGE_TARGET}
+                docker logout ${HARBOR_URL}
+                '''
+            }
+        }
 
 //        stage('Push Docker Image') {
 //            steps {
