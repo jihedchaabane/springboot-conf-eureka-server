@@ -113,7 +113,6 @@ pipeline {
 		stage('Push Docker Image to Harbor') {
             steps {
                 sh '''
-                //docker pull ${DOCKER_IMAGE}
                 docker tag ${DOCKER_IMAGE} ${IMAGE_TARGET}
                 echo "${HARBOR_CREDS_PSW}" | docker login ${HARBOR_URL} -u ${HARBOR_CREDS_USR} --password-stdin
                 docker push ${IMAGE_TARGET}
